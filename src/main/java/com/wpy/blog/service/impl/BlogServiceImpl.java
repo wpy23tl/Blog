@@ -86,7 +86,9 @@ public class BlogServiceImpl implements BlogService {
 	public DataGrid getAllList(Map<String,Object> map) {
 		String page = (String) map.get("page");
 		String pageSize = (String) map.get("pageSize");
-		PageHelper.startPage(Integer.valueOf(page),Integer.valueOf(pageSize));
+		if(page !=null && !"".equals(page)){
+			PageHelper.startPage(Integer.valueOf(page),Integer.valueOf(pageSize));
+		}
 		//List<Blog> blogList = blogMapper.select(null);
 		List<Blog> blogList = blogMapper.selectAll(map);
 		PageInfo<Blog> pageInfo = new PageInfo<Blog>(blogList);
