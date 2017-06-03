@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.wpy.blog.entity.Blog;
+import com.wpy.blog.entity.BlogType;
 import com.wpy.blog.framework.model.DataGrid;
 import com.wpy.blog.framework.model.Response;
 
@@ -15,7 +16,7 @@ public interface BlogService {
 	public Response update(Blog blog);
 	public Response delete(String ids);
 	public Blog     getObjectById(Integer id);
-	public DataGrid getAllList(String page, String pageSize);
+	public DataGrid getAllList(Map<String,Object> map);
 	public Integer getTotalCount();
 	/**
 	 * @author wpy

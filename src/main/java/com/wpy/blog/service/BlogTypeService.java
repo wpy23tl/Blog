@@ -46,4 +46,5 @@ public interface BlogTypeService {
 	 * @return
 	 */
 	public Response<List<BlogType>> selectTypeCount(Map<String,Object> map);
+	public List<BlogType> getAllList();
 }

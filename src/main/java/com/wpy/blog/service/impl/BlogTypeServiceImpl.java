@@ -1,6 +1,7 @@
 package com.wpy.blog.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.wpy.blog.dao.BlogTypeMapper;
 import com.wpy.blog.entity.Blog;
 import com.wpy.blog.entity.BlogType;
@@ -99,6 +100,16 @@ public class BlogTypeServiceImpl implements BlogTypeService {
 			response.setSuccess(false);
 		}
 		return response;
+	}
+
+	@Override
+	public List<BlogType> getAllList() {
+		PageHelper pageHelper = new PageHelper();
+		pageHelper.startPage(1,2);
+		List<BlogType> blogTypeList = blogTypeMapper.select(null);
+		PageInfo<BlogType> pageInfo = new PageInfo<BlogType>(blogTypeList);
+		pageInfo.getTotal();
+		return null;
 	}
 
 }

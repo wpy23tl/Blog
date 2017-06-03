@@ -83,11 +83,15 @@ public class BlogServiceImpl implements BlogService {
 
 
 	@Override
-	public DataGrid getAllList(String page, String pageSize) {
+	public DataGrid getAllList(Map<String,Object> map) {
+		String page = (String) map.get("page");
+		String pageSize = (String) map.get("pageSize");
 		PageHelper.startPage(Integer.valueOf(page),Integer.valueOf(pageSize));
 		//List<Blog> blogList = blogMapper.select(null);
-		List<Blog> blogList = blogMapper.selectAll();
-		int total = blogMapper.selectCount(new Blog());
+		List<Blog> blogList = blogMapper.selectAll(map);
+		PageInfo<Blog> pageInfo = new PageInfo<Blog>(blogList);
+		//int total = blogMapper.selectCount(new Blog());
+		int total = Integer.valueOf(String.valueOf(pageInfo.getTotal())).intValue();
 		List<BlogVo> newBlogList = new ArrayList<>();
 		for(Blog blog:blogList){
 			Date createTime = blog.getCreateTime();

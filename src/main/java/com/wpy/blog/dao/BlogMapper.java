@@ -4,6 +4,7 @@ import com.github.abel533.mapper.Mapper;
 import com.wpy.blog.entity.Blog;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BlogMapper extends Mapper<Blog> {
 
@@ -12,7 +13,7 @@ public interface BlogMapper extends Mapper<Blog> {
      * @param id
      * @return
      */
-    List<Blog> selectAll();
+    List<Blog> selectAll(Map<String,Object> map);
     /**
      * 查询总记录数
      * @return

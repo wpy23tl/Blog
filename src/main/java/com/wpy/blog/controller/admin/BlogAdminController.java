@@ -114,7 +114,10 @@ public class BlogAdminController {
     @ResponseBody
     @RequestMapping("/getAllList")
     public DataGrid getAllList(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(value = "page", required = false) String page, @RequestParam(value = "rows", required = false) String pageSize) throws Exception {
-        return blogService.getAllList(page,pageSize);
+        Map<String,Object> map = new HashMap<>();
+        map.put("page",page);
+        map.put("pageSize",pageSize);
+        return blogService.getAllList(map);
     }
 
    /* *//**

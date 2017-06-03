@@ -105,7 +105,11 @@ public class BlogController {
 			pageSize="10";
 		}
 		//查询出所有博客
-		DataGrid dataGrid = blogService.getAllList(page,pageSize);
+		Map<String,Object> map = new HashMap<>();
+		map.put("page",page);
+		map.put("pageSize",pageSize);
+		map.put("blogTypeId",blogTypeId);
+		DataGrid dataGrid = blogService.getAllList(map);
 		List<BlogVo> blogList = (List<BlogVo>)dataGrid.getRows();
 		List<BlogVo> newBlogList = new ArrayList<>();
 		for(BlogVo blogVo:blogList){
@@ -122,7 +126,7 @@ public class BlogController {
 		DataGrid dataGrid1 = firstPageBannerSettingService.getAllList("1","100");
 		List<BlogVo> bannerBlogList = (List<BlogVo>)dataGrid1.getRows();
 		model.addAttribute("bannerBlogList",bannerBlogList);
-		Integer totalCount = blogService.getTotalCount();
+		Integer totalCount = dataGrid.getTotal();
 		String pageCode = PageUtil.genPageCode(totalCount, Integer.valueOf(pageSize),Integer.valueOf(page), blogTypeId, request);
 		model.addAttribute("pageCode",pageCode);
 		return "portal/index";
@@ -141,9 +145,12 @@ public class BlogController {
 	 */
 	@RequestMapping("/article")
 	public String article(HttpServletRequest request,HttpServletResponse response,Model model,String id,String blogTypeId){
-		Map<String,Object> map = new HashMap<>();
 		//获取所有博客
-		DataGrid dataGrid =  blogService.getAllList("1","100");
+		Map<String,Object> map = new HashMap<>();
+//		map.put("page",page);
+//		map.put("pageSize",pageSize);
+		map.put("blogTypeId",blogTypeId);
+		DataGrid dataGrid = blogService.getAllList(map);
 		List<Blog> newBlogList = (List<Blog>)dataGrid.getRows();
 		//List<BlogVo> newBlogList = new ArrayList<>();
 //		for(Blog blog:blogList){
