@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wpy.blog.dao.PictureDao">
+	<resultMap type="Picture" id="PictureResult">
+		<result property="id" column="id"/>
+		<result property="path" column="path"/>
+	</resultMap>
+	
+	
+	
+	<select id="selectByPrimaryKey" parameterType="Integer" resultMap="PictureResult">
+		select * from tb_picture where id=#{id}
+	</select>
+	
+
+	<delete id="deleteByPrimarKey" parameterType="Integer">
+		delete from tb_picture where id=#{id}
+	</delete>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="Picture">
+		insert into tb_picture values(null,#{path})
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="Picture" >
+		update tb_picture set path=#{path}  where id=#{id}
+	</update>
+</mapper>

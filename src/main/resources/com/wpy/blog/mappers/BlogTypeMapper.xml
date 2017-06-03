@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wpy.blog.dao.BlogTypeMapper">
+	<resultMap type="BlogType" id="BlogTypeResult">
+		<result property="id" column="id"/>
+		<result property="blogTypeName" column="blog_type_name"/>
+		<result property="blogTypeCount" column="blogTypeCount"/>
+	</resultMap>
+	
+	<select id="selectAll" parameterType="Map" resultMap="BlogTypeResult">
+		select * from tb_blogtype 
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+	</select>
+	<select id="selectTypeCount" parameterType="Map" resultMap="BlogTypeResult">
+		select COUNT(bg.blog_type_id) blogTypeCount,obj.id,obj.blog_type_name from tb_blogtype obj   LEFT JOIN tb_blog bg on bg.blog_type_id = obj.id
+		<where>
+			<if test="id !=null and id!='' ">
+				obj.id=#{id}
+			</if>
+		</where>
+		 GROUP BY obj.id ORDER BY obj.id asc
+	</select>
+</mapper>

@@ -1,0 +1,11 @@
+# ignore Maven generated target folders
+target
+ 
+# ignore eclipse files
+.project
+.classpath
+.settings
+.metadata
+/bin/
+# ignore idea files
+.idea

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wpy.blog.dao.BloggerRecommedMapper">
+	<resultMap type="Blog" id="BlogResult">
+		<result property="id" column="id"/>
+		<result property="blogTitle" column="blog_title"/>
+		<result property="blogContent" column="blog_content"/>
+		<result property="createTime" column="create_time"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="blogTypeId" column="blog_type_id"/>
+		<result property="blogTypeName" column="blog_type_name"/>
+		<result property="summary" column="summary"/>
+		<result property="clickHit" column="click_hit"/>
+		<result property="recommendFlag" column="recommend_flag"/>
+		<result property="recommendNo" column="recommend_no"/>
+		<result property="bannerName" column="banner_name"/>
+		<result property="articlePictureViewId" column="article_picture_view_id"/>
+	</resultMap>
+
+
+
+
+	<select id="selectAll" parameterType="Map" resultMap="BlogResult">
+		SELECT obj.*,bt.blogTypeName FROM `tb_blog` obj LEFT JOIN tb_blogtype  bt ON obj.blogtype_id = bt.id where obj.bannerFlag=1
+	</select>
+</mapper>
