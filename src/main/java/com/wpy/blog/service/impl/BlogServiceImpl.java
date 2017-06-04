@@ -9,10 +9,12 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wpy.blog.dao.BlogMapper;
+import com.wpy.blog.entity.BlogType;
 import com.wpy.blog.entity.PageBean;
 import com.wpy.blog.entity.Picture;
 import com.wpy.blog.framework.model.DataGrid;
 import com.wpy.blog.framework.model.Response;
+import com.wpy.blog.service.BlogTypeService;
 import com.wpy.blog.service.FirstPageBannerSettingService;
 import com.wpy.blog.service.PictureService;
 import com.wpy.blog.util.DateTimeUtil;
@@ -35,6 +37,8 @@ public class BlogServiceImpl implements BlogService {
 
 	@Resource
 	private PictureService pictureService;
+	@Resource
+	private BlogTypeService blogTypeService;
 	@Resource
 	private FirstPageBannerSettingService firstPageBannerSettingService;
 
@@ -160,7 +164,15 @@ public class BlogServiceImpl implements BlogService {
 		DataGrid dataGrid1 = firstPageBannerSettingService.getAllList("1","100");
 		List<BlogVo> bannerBlogList = (List<BlogVo>)dataGrid1.getRows();
 		respMap.put("bannerBlogList",bannerBlogList);
-		Integer totalCount = this.getTotalCount();
+		Integer totalCount = null;
+		if (blogTypeId != null && !"".equals(blogTypeId)){
+			 Response<List<BlogType>> response = blogTypeService.selectTypeCount(map);
+			List<BlogType> blogTypeList1 = response.getData();
+			BlogType blogType = blogTypeList1.get(0);
+			totalCount= blogType.getBlogTypeCount();
+		}else{
+			totalCount = this.getTotalCount();
+		}
 		String pageCode = PageUtil.genPageCode(totalCount, Integer.valueOf(pageSize),Integer.valueOf(page), blogTypeId, request);
 		respMap.put("pageCode",pageCode);
 		return respMap;

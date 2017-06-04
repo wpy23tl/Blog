@@ -22,6 +22,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				obj.id=#{id}
 			</if>
 		</where>
-		 GROUP BY obj.id ORDER BY obj.id asc
+		GROUP BY obj.id ORDER BY obj.id asc
 	</select>
 </mapper>
