@@ -97,37 +97,14 @@ public class BlogController {
 	@RequestMapping("/index")
 	public String index(HttpServletRequest request,HttpServletResponse response,Model model,@RequestParam(value="page",required=false)String page,
 						@RequestParam(value="rows",required=false)String pageSize,String blogTypeId){
-		//判断当前页与要查询条数
-		if("".equals(page) || page==null){
-			page="1";
-		}
-		if("".equals(pageSize) || pageSize==null){
-			pageSize="10";
-		}
-		//查询出所有博客
-		Map<String,Object> map = new HashMap<>();
-		map.put("page",page);
-		map.put("pageSize",pageSize);
-		map.put("blogTypeId",blogTypeId);
-		DataGrid dataGrid = blogService.getAllList(map);
-		List<BlogVo> blogList = (List<BlogVo>)dataGrid.getRows();
-		List<BlogVo> newBlogList = new ArrayList<>();
-		for(BlogVo blogVo:blogList){
-			Picture picture = pictureService.getObjectById(blogVo.getArticlePictureViewId());
-			if (picture!=null){
-				String picturePath = picture.getPath();
-				blogVo.setPath(picturePath);
-			}
-			newBlogList.add(blogVo);
-		}
-		model.addAttribute("blogList",newBlogList);
 
-		//查出所有banner
-		DataGrid dataGrid1 = firstPageBannerSettingService.getAllList("1","100");
-		List<BlogVo> bannerBlogList = (List<BlogVo>)dataGrid1.getRows();
+		Map<String,Object> respMap = blogService.getIndexData(page,pageSize,blogTypeId,request);
+		List<BlogVo> newBlogList = (List<BlogVo>)respMap.get("blogList");
+		List<BlogVo> bannerBlogList = (List<BlogVo>)respMap.get("bannerBlogList");
+		String pageCode = (String)respMap.get("pageCode");
+		//向页面传输数据
+		model.addAttribute("blogList",newBlogList);
 		model.addAttribute("bannerBlogList",bannerBlogList);
-		Integer totalCount = dataGrid.getTotal();
-		String pageCode = PageUtil.genPageCode(totalCount, Integer.valueOf(pageSize),Integer.valueOf(page), blogTypeId, request);
 		model.addAttribute("pageCode",pageCode);
 		return "portal/index";
 	}
@@ -145,49 +122,50 @@ public class BlogController {
 	 */
 	@RequestMapping("/article")
 	public String article(HttpServletRequest request,HttpServletResponse response,Model model,String id,String blogTypeId){
-		//获取所有博客
-		Map<String,Object> map = new HashMap<>();
-//		map.put("page",page);
-//		map.put("pageSize",pageSize);
-		map.put("blogTypeId",blogTypeId);
-		DataGrid dataGrid = blogService.getAllList(map);
-		List<Blog> newBlogList = (List<Blog>)dataGrid.getRows();
-		//List<BlogVo> newBlogList = new ArrayList<>();
-//		for(Blog blog:blogList){
-//			Date createTime = blog.getCreateTime();
-//			String createTimeString = DateTimeUtil.DateToString(createTime, "yyyy-MM-dd HH:mm:ss");
-//			BlogVo blogVo = new BlogVo();
-//			BeanUtils.copyProperties(blog, blogVo);
-//			blogVo.setCreateTime(createTimeString);
-//			newBlogList.add(blogVo);
+//		//获取所有博客
+//		Map<String,Object> map = new HashMap<>();
+//		map.put("blogTypeId",blogTypeId);
+//		DataGrid dataGrid = blogService.getAllList(map);
+//		List<Blog> newBlogList = (List<Blog>)dataGrid.getRows();
+//		model.addAttribute("blogList",newBlogList);
+//		//根据id获取博客
+//		Blog blog =blogService.getObjectById(Integer.valueOf(id));
+//		//增加查看次数
+//		blog.setClickHit(blog.getClickHit()+1);
+//		blogService.update(blog);
+//		Date createTime = blog.getCreateTime();
+//		BlogVo blogVo = new BlogVo();
+//		BeanUtils.copyProperties(blog, blogVo);
+//		String createTimeString = DateTimeUtil.DateToString(createTime, "yyyy-MM-dd HH:mm:ss");
+//		blogVo.setCreateTime(createTimeString);
+//		model.addAttribute("blog",blogVo);
+//		//获取上一篇博客
+//		Response<Blog> lastBlog =	blogService.getLastBlog(Integer.valueOf(id));
+//		//获取下一篇博客
+//		Response<Blog> nextBlog = blogService.getNextBlog(Integer.valueOf(id));
+//		model.addAttribute("lastBlog",lastBlog.getData());
+//		model.addAttribute("nextBlog",nextBlog.getData());
+//
+//
+//
+//		if(blogTypeId!=null && !"null".equals(blogTypeId) ){
+//			map.put("blogTypeId",Integer.valueOf(blogTypeId));
 //		}
-		model.addAttribute("blogList",newBlogList);
-		//根据id获取博客
-		Blog blog =blogService.getObjectById(Integer.valueOf(id));
-		//增加查看次数
-		blog.setClickHit(blog.getClickHit()+1);
-		blogService.update(blog);
-		Date createTime = blog.getCreateTime();
-		BlogVo blogVo = new BlogVo();
-		BeanUtils.copyProperties(blog, blogVo);
-		String createTimeString = DateTimeUtil.DateToString(createTime, "yyyy-MM-dd HH:mm:ss");
-		blogVo.setCreateTime(createTimeString);
-		model.addAttribute("blog",blogVo);
-		//获取上一篇博客
-		Response<Blog> lastBlog =	blogService.getLastBlog(Integer.valueOf(id));
-		//获取下一篇博客
-		Response<Blog> nextBlog = blogService.getNextBlog(Integer.valueOf(id));
-		model.addAttribute("lastBlog",lastBlog.getData());
-		model.addAttribute("nextBlog",nextBlog.getData());
+//		Map<String,Object> map0 = new HashMap<>();
 
 
-
-		if(blogTypeId!=null && !"null".equals(blogTypeId) ){
-			map.put("blogTypeId",Integer.valueOf(blogTypeId));
-		}
-		Map<String,Object> map0 = new HashMap<>();
 //		List<BlogType> blogTypeList =blogTypeService.selectTypeCount(map0);
 //		model.addAttribute("blogTypeList",blogTypeList);
+		Map<String,Object> respMap = blogService.updateAndGetArticleData(id,blogTypeId);
+		List<BlogVo> newBlogList = (List<BlogVo>)respMap.get("blogList");
+		BlogVo blogVo  = (BlogVo)respMap.get("blog");
+		Blog lastBlog = (Blog)respMap.get("lastBlog");
+		Blog nextBlog = (Blog) respMap.get("nextBlog");
+		//向页面传输数据
+		model.addAttribute("blog",blogVo);
+		model.addAttribute("blogList",newBlogList);
+		model.addAttribute("lastBlog",lastBlog);
+		model.addAttribute("nextBlog",nextBlog);
 		return "portal/article";
 	}
 }

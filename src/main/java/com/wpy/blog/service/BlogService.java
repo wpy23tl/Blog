@@ -9,6 +9,8 @@ import com.wpy.blog.entity.BlogType;
 import com.wpy.blog.framework.model.DataGrid;
 import com.wpy.blog.framework.model.Response;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface BlogService {
 
 
@@ -18,6 +20,22 @@ public interface BlogService {
 	public Blog     getObjectById(Integer id);
 	public DataGrid getAllList(Map<String,Object> map);
 	public Integer getTotalCount();
+
+	/**
+	 * 获取首页数据
+	 * @return
+	 */
+	public Map<String,Object> getIndexData(String page,String pageSize,String blogTypeId,HttpServletRequest request);
+
+	/**
+	 * 获取文章数据
+	 * @param page
+	 * @param pageSize
+	 * @param blogTypeId
+	 * @param request
+	 * @return
+	 */
+	public Map<String,Object> updateAndGetArticleData(String id,String blogTypeId);
 	/**
 	 * @author wpy
 	 * @desc 根据点击数排行
