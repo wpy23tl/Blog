@@ -72,9 +72,9 @@ public class BlogController {
 		//博主推荐
 		//List<Blog> bloggerRecommends = blogService.getBloggerRecommend();
 		DataGrid dataGrid1 = bloggerRecommendService.getAllList("1","100");
-		List<Blog> bloggerRecommends = (List<Blog>)dataGrid1.getRows();
+		List<BlogVo> bloggerRecommends = (List<BlogVo>)dataGrid1.getRows();
 		List<BlogVo> newBloggerRecommends = new ArrayList<>();
-		for(Blog blog:bloggerRecommends){
+		for(BlogVo blog:bloggerRecommends){
 			Picture picture = pictureService.getObjectById(blog.getArticlePictureViewId());
 			BlogVo blogVo = new BlogVo();
 			BeanUtils.copyProperties(blog, blogVo);
@@ -116,40 +116,6 @@ public class BlogController {
 	 */
 	@RequestMapping("/article")
 	public String article(HttpServletRequest request,HttpServletResponse response,Model model,String id,String blogTypeId){
-//		//获取所有博客
-//		Map<String,Object> map = new HashMap<>();
-//		map.put("blogTypeId",blogTypeId);
-//		DataGrid dataGrid = blogService.getAllList(map);
-//		List<Blog> newBlogList = (List<Blog>)dataGrid.getRows();
-//		model.addAttribute("blogList",newBlogList);
-//		//根据id获取博客
-//		Blog blog =blogService.getObjectById(Integer.valueOf(id));
-//		//增加查看次数
-//		blog.setClickHit(blog.getClickHit()+1);
-//		blogService.update(blog);
-//		Date createTime = blog.getCreateTime();
-//		BlogVo blogVo = new BlogVo();
-//		BeanUtils.copyProperties(blog, blogVo);
-//		String createTimeString = DateTimeUtil.DateToString(createTime, "yyyy-MM-dd HH:mm:ss");
-//		blogVo.setCreateTime(createTimeString);
-//		model.addAttribute("blog",blogVo);
-//		//获取上一篇博客
-//		Response<Blog> lastBlog =	blogService.getLastBlog(Integer.valueOf(id));
-//		//获取下一篇博客
-//		Response<Blog> nextBlog = blogService.getNextBlog(Integer.valueOf(id));
-//		model.addAttribute("lastBlog",lastBlog.getData());
-//		model.addAttribute("nextBlog",nextBlog.getData());
-//
-//
-//
-//		if(blogTypeId!=null && !"null".equals(blogTypeId) ){
-//			map.put("blogTypeId",Integer.valueOf(blogTypeId));
-//		}
-//		Map<String,Object> map0 = new HashMap<>();
-
-
-//		List<BlogType> blogTypeList =blogTypeService.selectTypeCount(map0);
-//		model.addAttribute("blogTypeList",blogTypeList);
 		Map<String,Object> respMap = blogService.updateAndGetArticleData(id,blogTypeId);
 		List<BlogVo> newBlogList = (List<BlogVo>)respMap.get("blogList");
 		BlogVo blogVo  = (BlogVo)respMap.get("blog");
