@@ -53,7 +53,7 @@ public class BlogTypeAdminController {
     @ResponseBody
     @RequestMapping("/getAllList")
     public DataGrid getAllList(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(value = "page", required = false) String page, @RequestParam(value = "rows", required = false) String pageSize) throws Exception {
-        return blogTypeService.getAllList(page,pageSize);
+        return blogTypeService.getAllListToGrid(page,pageSize);
     }
 
     /**

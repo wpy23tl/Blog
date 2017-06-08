@@ -73,8 +73,8 @@ public class BlogAdminController {
     @RequestMapping("/addPage")
     public String addPage(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 
-        DataGrid dataGrid = blogTypeService.getAllList("1","1000");
-        List<BlogType> blogTypeList = (List<BlogType>)dataGrid.getRows();
+        Response<List<BlogType>> resp = blogTypeService.getAllList("1","1000");
+        List<BlogType> blogTypeList = resp.getData();
         model.addAttribute("blogTypeList",blogTypeList);
         return "admin/blogAdd2";
     }
@@ -91,8 +91,8 @@ public class BlogAdminController {
     @RequestMapping("/updatePage")
     public String updatePage(HttpServletRequest request,HttpServletResponse response,Model model,Integer id) throws Exception{
         Blog blog = blogService.getObjectById(id);
-        DataGrid dataGrid = blogTypeService.getAllList("1","1000");
-        List<BlogType> blogTypeList = (List<BlogType>)dataGrid.getRows();
+        Response<List<BlogType>> resp = blogTypeService.getAllList("1","1000");
+        List<BlogType> blogTypeList = resp.getData();
         model.addAttribute("blogTitle",blog.getBlogTitle());
         model.addAttribute("blogContent",blog.getBlogContent());
         model.addAttribute("blogTypeList",blogTypeList);
@@ -117,7 +117,7 @@ public class BlogAdminController {
         Map<String,Object> map = new HashMap<>();
         map.put("page",page);
         map.put("pageSize",pageSize);
-        return blogService.getAllList(map);
+        return blogService.getAllListToDataGrid(map);
     }
 
    /* *//**

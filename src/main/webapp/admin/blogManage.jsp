@@ -50,7 +50,7 @@
 					if(r){
 						$.ajax({
 							type:"POST",
-							url:"${pageContext.request.contextPath}/blogAdminController/deleteBlog.do",
+							url:"${pageContext.request.contextPath}/blogAdminController/delete.do",
 							data:{ids:ids},
 							success:function(){
 								$.messager.alert("系统提示","数据已成功删除！");

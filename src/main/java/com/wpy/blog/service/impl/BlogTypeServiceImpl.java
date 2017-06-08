@@ -72,15 +72,33 @@ public class BlogTypeServiceImpl implements BlogTypeService {
 
 
 	@Override
-	public DataGrid getAllList(String page, String pageSize) {
+	public Response<List<BlogType>> getAllList(String page, String pageSize) {
 
-		PageHelper.startPage(Integer.valueOf(page),Integer.valueOf(pageSize));
-		List<BlogType> blogTypeList = blogTypeMapper.select(null);
-		int total = blogTypeMapper.selectCount(new BlogType());
-		DataGrid dataGrid = new DataGrid();
-		dataGrid.setRows(blogTypeList);
-		dataGrid.setTotal(total);
-		return dataGrid;
+		Response<List<BlogType>> response = new Response<>();
+		try {
+			PageHelper.startPage(Integer.valueOf(page),Integer.valueOf(pageSize));
+			List<BlogType> blogTypeList = blogTypeMapper.select(null);
+			response.setData(blogTypeList);
+			response.setSuccess(true);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			response.setSuccess(false);
+		}
+
+		return response;
+
+	}
+
+	@Override
+	public DataGrid getAllListToGrid(String page, String pageSize) {
+
+			DataGrid dataGrid = new DataGrid();
+			PageHelper.startPage(Integer.valueOf(page),Integer.valueOf(pageSize));
+			List<BlogType> blogTypeList = blogTypeMapper.select(null);
+			dataGrid.setRows(blogTypeList);
+			Integer total = blogTypeMapper.selectCount(new BlogType());
+			dataGrid.setTotal(total);
+			return dataGrid;
 
 	}
 

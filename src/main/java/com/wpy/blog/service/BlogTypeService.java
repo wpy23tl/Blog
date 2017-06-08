@@ -38,7 +38,8 @@ public interface BlogTypeService {
      * @param pageSize
      * @return
      */
-	public DataGrid getAllList(String page, String pageSize);
+	public Response<List<BlogType>> getAllList(String page, String pageSize);
+	public DataGrid getAllListToGrid(String page, String pageSize);
 
 	/**
 	 *

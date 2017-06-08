@@ -8,6 +8,7 @@ import com.wpy.blog.entity.Blog;
 import com.wpy.blog.entity.BlogType;
 import com.wpy.blog.framework.model.DataGrid;
 import com.wpy.blog.framework.model.Response;
+import com.wpy.blog.vo.BlogVo;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,7 +19,8 @@ public interface BlogService {
 	public Response update(Blog blog);
 	public Response delete(String ids);
 	public Blog     getObjectById(Integer id);
-	public DataGrid getAllList(Map<String,Object> map);
+	public Response<List<BlogVo>> getAllList(Map<String,Object> map);
+	public DataGrid getAllListToDataGrid(Map<String,Object> map);
 	public Integer getTotalCount();
 
 	/**

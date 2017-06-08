@@ -8,15 +8,15 @@ import java.util.List;
  */
 public class DataGrid {
     //总记录数
-    private int total;
+    private Integer total;
     //数据
     private List<?> rows = new ArrayList<Object>();// 结果集
 
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 
@@ -31,7 +31,7 @@ public class DataGrid {
     public DataGrid() {
     }
 
-    public DataGrid(int total, List<?> rows) {
+    public DataGrid(Integer total, List<?> rows) {
         this.total = total;
         this.rows = rows;
     }

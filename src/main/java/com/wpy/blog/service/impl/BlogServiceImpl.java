@@ -96,13 +96,12 @@ public class BlogServiceImpl implements BlogService {
 
 
 	@Override
-	public DataGrid getAllList(Map<String,Object> map) {
+	public Response<List<BlogVo>> getAllList(Map<String,Object> map) {
+		Response<List<BlogVo>> response = new Response<>();
 		String page = (String) map.get("page");
 		String pageSize = (String) map.get("pageSize");
-		//List<Blog> blogList = blogMapper.select(null);
 		List<Blog> blogList = blogMapper.selectAll(map);
 		PageInfo<Blog> pageInfo = new PageInfo<Blog>(blogList);
-		//int total = blogMapper.getTotalCount();
 		List<BlogVo> newBlogList = new ArrayList<>();
 		for(Blog blog:blogList){
 			Date createTime = blog.getCreateTime();
@@ -112,11 +111,19 @@ public class BlogServiceImpl implements BlogService {
 			blogVo.setCreateTime(createTimeString);
 			newBlogList.add(blogVo);
 		}
+
+		response.setData(newBlogList);
+		return response;
+	}
+
+	@Override
+	public DataGrid getAllListToDataGrid(Map<String, Object> map) {
+		Response<List<BlogVo>> response = this.getAllList(map);
+		List<BlogVo> blogVoList = response.getData();
 		DataGrid dataGrid = new DataGrid();
-		dataGrid.setRows(newBlogList);
-		//dataGrid.setTotal(total);
-
-
+		dataGrid.setRows(blogVoList);
+		Integer total = blogMapper.getTotalCount();
+		dataGrid.setTotal(total);
 		return dataGrid;
 	}
 
@@ -148,8 +155,8 @@ public class BlogServiceImpl implements BlogService {
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
 		map.put("blogTypeId",blogTypeId);
-		DataGrid dataGrid = this.getAllList(map);
-		List<BlogVo> blogList = (List<BlogVo>)dataGrid.getRows();
+		Response<List<BlogVo>> response = this.getAllList(map);
+		List<BlogVo> blogList = response.getData();
 		List<BlogVo> newBlogList = new ArrayList<>();
 		for(BlogVo blogVo:blogList){
 			Picture picture = pictureService.getObjectById(blogVo.getArticlePictureViewId());
@@ -165,9 +172,11 @@ public class BlogServiceImpl implements BlogService {
 		List<BlogVo> bannerBlogList = (List<BlogVo>)dataGrid1.getRows();
 		respMap.put("bannerBlogList",bannerBlogList);
 		Integer totalCount = null;
-		if (blogTypeId != null && !"".equals(blogTypeId)){
-			 Response<List<BlogType>> response = blogTypeService.selectTypeCount(map);
-			List<BlogType> blogTypeList1 = response.getData();
+		if (blogTypeId != null && !"".equals(blogTypeId) && !"null".equals(blogTypeId)){
+			Map<String,Object> map1 = new HashMap<>();
+			map1.put("id",blogTypeId);
+			Response<List<BlogType>> resp = blogTypeService.selectTypeCount(map1);
+			List<BlogType> blogTypeList1 = resp.getData();
 			BlogType blogType = blogTypeList1.get(0);
 			totalCount= blogType.getBlogTypeCount();
 		}else{
@@ -191,8 +200,8 @@ public class BlogServiceImpl implements BlogService {
 		//获取所有博客
 		Map<String,Object> map = new HashMap<>();
 		map.put("blogTypeId",blogTypeId);
-		DataGrid dataGrid = this.getAllList(map);
-		List<BlogVo> newBlogList = (List<BlogVo>)dataGrid.getRows();
+		Response<List<BlogVo>> response = this.getAllList(map);
+		List<BlogVo> newBlogList = response.getData();
 		respMap.put("blogList",newBlogList);
 		//根据id获取博客
 		Blog blog =this.getObjectById(Integer.valueOf(id));

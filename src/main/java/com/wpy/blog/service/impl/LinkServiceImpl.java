@@ -76,7 +76,22 @@ public class LinkServiceImpl implements LinkService {
 	}
 
 	@Override
-	public DataGrid getAllList(String page, String pageSize) {
+	public Response<List<Link>> getAllList(String page, String pageSize) {
+		Response<List<Link>> response = new Response<>();
+		try {
+			PageHelper.startPage(Integer.valueOf(page),Integer.valueOf(pageSize));
+			List<Link> linkList = linkMapper.select(null);
+			response.setSuccess(true);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			response.setSuccess(false);
+		}
+		return response;
+
+	}
+
+	@Override
+	public DataGrid getAllListToGgrid(String page, String pageSize) {
 		PageHelper.startPage(Integer.valueOf(page),Integer.valueOf(pageSize));
 		List<Link> linkList = linkMapper.select(null);
 		int total = linkMapper.selectCount(new Link());
@@ -84,8 +99,8 @@ public class LinkServiceImpl implements LinkService {
 		dataGrid.setRows(linkList);
 		dataGrid.setTotal(total);
 		return dataGrid;
-
 	}
+
 
 	@Override
 	public Integer getTotalCount() {

@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectAll" parameterType="Map" resultMap="BlogResult">
 		SELECT obj.*,bt.blog_type_name,pic.path FROM `tb_blog` obj LEFT JOIN tb_blogtype  bt ON obj.blog_type_id = bt.id  LEFT JOIN tb_picture pic ON obj.article_picture_view_id = pic.id
 		<where>
-			<if test="blogTypeId !=null and blogTypeId !='' ">
+			<if test="blogTypeId !=null and blogTypeId !='' and blogTypeId !='null' ">
 				and blog_type_id = #{blogTypeId}
 			</if>
 		</where>

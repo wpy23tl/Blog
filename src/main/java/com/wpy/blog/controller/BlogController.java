@@ -67,9 +67,8 @@ public class BlogController {
 		//application.setAttribute("randomBlogs",randomBlogs);
 		model.addAttribute("randomBlogs",randomBlogs.getData());
 		//友情链接
-        DataGrid dataGrid = linkService.getAllList("1","100");
-        List<Link> linkList =(List<Link>)dataGrid.getRows();
-		model.addAttribute("linkList",linkList);
+        Response<List<Link>> linkList = linkService.getAllList("1","100");
+		model.addAttribute("linkList",linkList.getData());
 		//application.setAttribute("linkList",linkList);
 		//标签云（获取所有博客类型）
 		Response<List<BlogType>> blogTypeList = blogTypeService.selectTypeCount(map);

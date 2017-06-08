@@ -53,7 +53,7 @@ public class LinkAdminController {
     @ResponseBody
     @RequestMapping("/getAllList")
     public DataGrid getAllList(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(value = "page", required = false) String page, @RequestParam(value = "rows", required = false) String pageSize) throws Exception {
-        return linkService.getAllList(page,pageSize);
+        return linkService.getAllListToGgrid(page,pageSize);
     }
 
     /**
