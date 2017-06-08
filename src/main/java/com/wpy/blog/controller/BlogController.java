@@ -56,39 +56,34 @@ public class BlogController {
 		Map<String,Object> map = new HashMap<>();
 		// 点击排行
 		 Response<List<Blog>>  clickHitRank = blogService.getRankByClickHit();
-		//application.setAttribute("clickHitRank",clickHitRank);
 		model.addAttribute("clickHitRank",clickHitRank.getData());
 		//最新文章
 		Response<Blog> createTimeRank = blogService.getRankByCreateTime();
-		//application.setAttribute("createTimeRank",createTimeRank);
 		model.addAttribute("createTimeRank",createTimeRank.getData());
 		//随机文章
 		Response<Blog> randomBlogs = blogService.getRankByRandom();
-		//application.setAttribute("randomBlogs",randomBlogs);
 		model.addAttribute("randomBlogs",randomBlogs.getData());
 		//友情链接
         Response<List<Link>> linkList = linkService.getAllList("1","100");
 		model.addAttribute("linkList",linkList.getData());
-		//application.setAttribute("linkList",linkList);
 		//标签云（获取所有博客类型）
 		Response<List<BlogType>> blogTypeList = blogTypeService.selectTypeCount(map);
 		model.addAttribute("blogTypeList",blogTypeList.getData());
-//		//application.setAttribute("blogTypeList",blogTypeList);
 		//博主推荐
 		//List<Blog> bloggerRecommends = blogService.getBloggerRecommend();
 		DataGrid dataGrid1 = bloggerRecommendService.getAllList("1","100");
-		List<Blog> newBloggerRecommends = (List<Blog>)dataGrid1.getRows();
-//		List<BlogVo> newBloggerRecommends = new ArrayList<>();
-//		for(Blog blog:bloggerRecommends){
-//			Picture picture = pictureService.getBlogById(blog.getArticlePictureViewId());
-//			BlogVo blogVo = new BlogVo();
-//			BeanUtils.copyProperties(blog, blogVo);
-//			if (picture!=null){
-//				String picturePath = picture.getPath();
-//				blogVo.setPath(picturePath);
-//			}
-//			newBloggerRecommends.add(blogVo);
-//		}
+		List<Blog> bloggerRecommends = (List<Blog>)dataGrid1.getRows();
+		List<BlogVo> newBloggerRecommends = new ArrayList<>();
+		for(Blog blog:bloggerRecommends){
+			Picture picture = pictureService.getObjectById(blog.getArticlePictureViewId());
+			BlogVo blogVo = new BlogVo();
+			BeanUtils.copyProperties(blog, blogVo);
+			if (picture!=null){
+				String picturePath = picture.getPath();
+				blogVo.setPath(picturePath);
+			}
+			newBloggerRecommends.add(blogVo);
+		}
 		model.addAttribute("bloggerRecommends",newBloggerRecommends);
 	}
 
