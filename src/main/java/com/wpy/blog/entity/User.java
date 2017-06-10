@@ -1,12 +1,15 @@
 package com.wpy.blog.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
-
-public class Blogger implements Serializable {
-
+@Table(name = "tb_user")
+public class User implements Serializable {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;//����id
 	private String userName;//�û���
 	private String password;//����
+	@Transient
 	private String aboutMe;//关于我
 	public Integer getId() {
 		return id;

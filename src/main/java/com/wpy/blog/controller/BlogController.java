@@ -44,12 +44,6 @@ public class BlogController {
 	@Resource
 	private PictureService pictureService;
 
-	public Cache cache ;
-	public List<BlogType> blogTypeList;
-	public 	List<Blog> bannerBlogList;
-	public List<BlogVo> newBlogList;
-	public Integer totalCount = null;
-
 
 	@ModelAttribute
 	public void init(Model model){
