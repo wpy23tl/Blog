@@ -5,6 +5,7 @@ import com.wpy.blog.framework.model.DataGrid;
 import com.wpy.blog.framework.model.Response;
 import com.wpy.blog.service.*;
 import com.wpy.blog.vo.BlogVo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/blogController")
+@RequestMapping("/userController")
 public class UserController {
 
 	@Resource
@@ -34,22 +35,44 @@ public class UserController {
 	 * @param verifyCod 验证码
 	 * @return
 	 */
- public String login(String userName,String password,String verifyCod,Model model){
+	@RequestMapping("/login")
+ public String login(String userName,String password,String verifyCode,Model model,HttpServletRequest request){
 
- 	Response<User> response = userService.login(userName,password,verifyCod);
+	if (StringUtils.isEmpty(userName)){
+		model.addAttribute("errorInfo","请输入用户名！");
+		return "login";
+	}
+	if (StringUtils.isEmpty(password)){
+		model.addAttribute("errorInfo","请输入密码！");
+		return "login";
+	}
+	if (StringUtils.isEmpty(verifyCode)){
+		model.addAttribute("errorInfo","请输入验证码！");
+		return "login";
+	}
+
+	//校验验证码
+	String sessionVerifyCode = (String) request.getSession().getAttribute("sRand");
+	if (!verifyCode.equals(sessionVerifyCode)){
+		model.addAttribute("errorInfo","验证码错误！");
+		return "login";
+	}
+ 	Response<User> response = userService.login(userName,password,verifyCode);
  	User user = response.getData();
  	if (user == null){
  		model.addAttribute("errorInfo","用户不存在！");
- 		return "login/login";
+ 		return "login";
 	}
 
 	if (!password.equals(user.getPassword())){
 		model.addAttribute("errorInfo","密码输入错误！");
-		return "login/login";
+		return "login";
 
 	}
 
-	return  "index";
+	request.getSession().setAttribute("currentUser",user);
+
+	return  "admin/main";
 
  }
 
