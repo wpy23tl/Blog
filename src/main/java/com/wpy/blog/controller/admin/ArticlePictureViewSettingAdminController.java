@@ -190,6 +190,7 @@ public class ArticlePictureViewSettingAdminController {
         String filePath =request.getSession().getServletContext().getRealPath("/articlePictureView");
         //新文件
         File file = new File(filePath,newFileName);
+        file.mkdirs();
         //将内存中的文件写入磁盘
         pictureFile1.transferTo(file);
         //将路径存入图片表

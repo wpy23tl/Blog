@@ -12,10 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,4 +78,28 @@ public class UserController {
 
  }
 
+	/**
+	 * 修改博主密码
+	 * @param newPassword
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/modifyPassword")
+	@ResponseBody
+	public Response modifyPassword(String id,String newPassword,HttpServletResponse response)throws Exception {
+
+		Response resp = userService.updatePassword(id, newPassword);
+		return resp;
+
+	}
+
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request,HttpServletResponse response)throws Exception {
+
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return "redirect:login.jsp";
+
+	}
 }

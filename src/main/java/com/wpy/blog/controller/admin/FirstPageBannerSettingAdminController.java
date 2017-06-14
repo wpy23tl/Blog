@@ -100,8 +100,10 @@ public class FirstPageBannerSettingAdminController {
         String newFileName = timeString+originalfileName.substring(originalfileName.lastIndexOf("."));
         //String filePath = request.getContextPath()+"/bannerImages/";
         String filePath =request.getSession().getServletContext().getRealPath("/bannerImages");
+        //检测目的地文件夹存不存在，不存在就创建
         //新文件
         File file = new File(filePath,newFileName);
+        file.mkdirs();
         //将内存中的文件写入磁盘
         pictureFile.transferTo(file);
         blog.setBannerName(newFileName);
@@ -144,6 +146,7 @@ public class FirstPageBannerSettingAdminController {
         String filePath =request.getSession().getServletContext().getRealPath("/bannerImages");
         //新文件
         File file = new File(filePath,newFileName);
+        file.mkdirs();
         //将内存中的文件写入磁盘
         pictureFile1.transferTo(file);
         blog.setBannerName(newFileName);

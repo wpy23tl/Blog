@@ -11,6 +11,59 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
+
+    function openPasswordModifyDialog(){
+        $("#dlg").dialog("open").dialog("setTitle","修改密码");
+        url="${pageContext.request.contextPath}/userController/modifyPassword.do?id=${currentUser.id}";
+    }
+
+    function modifyPassword(){
+        $("#fm").form("submit",{
+            url:url,
+            onSubmit:function(){
+                var newPassword=$("#newPassword").val();
+                var newPassword2=$("#newPassword2").val();
+                if(!$(this).form("validate")){
+                    return false;
+                }
+                if(newPassword!=newPassword2){
+                    $.messager.alert("系统提示","确认密码输入错误！");
+                    return false;
+                }
+                return true;
+            },
+            success:function(result){
+                var result=eval('('+result+')');
+                if(result.success){
+                    $.messager.alert("系统提示","密码修改成功，下一次登录生效！");
+                    resetValue();
+                    $("#dlg").dialog("close");
+                }else{
+                    $.messager.alert("系统提示","密码修改失败！");
+                    return;
+                }
+            }
+        });
+    }
+
+    function logout(){
+        $.messager.confirm("系统提示","您确定要退出系统吗？",function(r){
+            if(r){
+                window.location.href='${pageContext.request.contextPath}/userController/logout.do';
+            }
+        });
+    }
+
+    function closePasswordModifyDialog(){
+        resetValue();
+        $("#dlg").dialog("close");
+    }
+
+    function resetValue(){
+        $("#oldPassword").val("");
+        $("#newPassword").val("");
+        $("#newPassword2").val("");
+    }
 	function openTab(title,url,iconCls){
 		var content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='${pageContext.request.contextPath}"+url+"'></iframe>"
 		if($('#tabs').tabs('exists',title)){

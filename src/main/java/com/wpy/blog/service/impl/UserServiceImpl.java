@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserMapper bloggerMapper;
+	private UserMapper userMapper;
 
 	@Override
 	public Response<User> login(String uesrname, String password, String verifCode) {
@@ -26,8 +26,23 @@ public class UserServiceImpl implements UserService {
 		Response<User> response = new Response<>();
 		User user = new User();
 		user.setUserName(uesrname);
-		User newUser = bloggerMapper.selectOne(user);
+		User newUser = userMapper.selectOne(user);
 		response.setData(newUser);
+		return response;
+	}
+
+	@Override
+	public Response updatePassword(String id, String password) {
+		Response response = new Response();
+		User user = userMapper.selectByPrimaryKey(Integer.valueOf(id));
+		user.setPassword(password);
+		try {
+			userMapper.updateByPrimaryKey(user);
+			response.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setSuccess(false);
+		}
 		return response;
 	}
 }

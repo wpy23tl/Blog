@@ -17,6 +17,7 @@ import java.util.Map;
 public interface UserService {
 
 	public Response<User> login(String uesrname, String password, String verifCode);
+	public Response updatePassword(String id,String password);
 
 
 }

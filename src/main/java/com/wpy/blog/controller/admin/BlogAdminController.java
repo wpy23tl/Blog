@@ -235,7 +235,9 @@ public class BlogAdminController {
         FileInputStream fis = new FileInputStream(filePath);
 
         String filePath1 =request.getSession().getServletContext().getRealPath("/articlePictureView")+"/"+newPath;
-
+        //检测文件夹存不存在，不存在就创建
+        File file = new File(filePath1);
+        file.mkdirs();
         // 封装目的地
         FileOutputStream fos = new FileOutputStream(filePath1);
 
