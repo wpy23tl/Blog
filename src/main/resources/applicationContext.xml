@@ -5,12 +5,14 @@
     xmlns:aop="http://www.springframework.org/schema/aop"   
     xmlns:context="http://www.springframework.org/schema/context"  
     xmlns:jee="http://www.springframework.org/schema/jee"  
-    xmlns:tx="http://www.springframework.org/schema/tx"  
-    xsi:schemaLocation="    
+    xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:task="http://www.springframework.org/schema/task"
+	   xsi:schemaLocation="
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd  
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd  
-        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd  
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+        http://www.springframework.org/schema/task  http://www.springframework.org/schema/task/spring-task-3.0.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
 
@@ -53,6 +55,10 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
 
+	<!-- 自动扫描 -->
+	<context:component-scan base-package="com.wpy.blog.service" />
+	<context:component-scan base-package="com.wpy.blog.job" />
+
 	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -65,6 +71,9 @@
 	<bean id="ehcacheUtil " class="com.wpy.blog.util.EhcacheUtil"/>
 	<!-- 配置切面类-->
 	<bean id="ehcacheUtil1" class="com.wpy.blog.util.EhcacheUtil1"/>
+
+
+
 
 	<!-- 配置事务通知属性 -->  
     <tx:advice id="txAdvice" transaction-manager="transactionManager">  
@@ -95,14 +104,8 @@
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
 
     </aop:config>
-	<!--<aop:config>
-		<aop:pointcut id="xx" expression="execution(* com.wpy.blog.service.*.add(..)) ) " />
-		<aop:aspect id="yy" ref="ehcacheUtil1" >
-			<aop:after method="put(org.aspectj.lang.JoinPoint)" pointcut-ref="xx"  />
-		</aop:aspect>
 
-	</aop:config>-->
-    
-   <!-- 自动扫描 -->
-	<context:component-scan base-package="com.wpy.blog.service" />
+	<!-- 启动定时器 -->
+	<task:annotation-driven/>
+
 </beans>

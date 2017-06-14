@@ -4,7 +4,17 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-  
+
+	<!-- 自定义过滤器，要放置到struts2的过滤器的上面 -->
+	<filter>
+		<filter-name>SystemFilter</filter-name>
+		<filter-class>com.wpy.blog.filter.SessionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>SystemFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
 
     <!-- Spring配置文件 -->
 	<context-param>

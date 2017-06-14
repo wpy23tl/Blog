@@ -69,6 +69,7 @@
 			<a href="javascript:void(0)" onclick="openTab('博客推荐管理','/bloggerRecommendAdminController/manager.do','icon-bklb')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">博主推荐</a>
 			<a href="javascript:void(0)" onclick="openTab('首页轮播图片设置','/firstPageBannerSettingAdminController/manager.do','icon-bklb')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">首页轮播图片设置</a>
 			<a href="javascript:void(0)" onclick="openTab('文章预览图片设置','/articlePictureViewSettingAdminController/manager.do','icon-bklb')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">文章预览图片设置</a>
+			<a href="javascript:void(0)" onclick="openTab('定时任务设置','/timeTaskController/manager.do','icon-bklb')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">定时任务设置</a>
 		</div>
 		<div title="博客管理"  data-options="iconCls:'icon-bkgl'" style="padding:10px;">
 			<a href="javascript:void(0)" onclick="openTab('写博客','/blogAdminController/addBlog.do','icon-writeblog')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-writeblog'" style="width: 150px">写博客</a>
