@@ -170,7 +170,7 @@ public class BlogAdminController {
         //解析首张图片名称，保存到图片表
         String blogInfo = blog.getBlogContent();
         Document doc = Jsoup.parse(blogInfo);
-        Elements jpgs = doc.select("img[src$=.jpg]"); //　查找扩展名是jpg的图片
+        Elements jpgs = doc.select("img[src]"); //　查找图片
         //String title = doc.select("img[src$=.jpg]").get(0).attr("title"); //　查找扩展名是jpg的图片
         Integer pictureViewId = null;
         for(int i=0;i<jpgs.size();i++){
@@ -233,13 +233,13 @@ public class BlogAdminController {
         String filePath =request.getSession().getServletContext().getRealPath(oldPath1);
         // 封装数据源
         FileInputStream fis = new FileInputStream(filePath);
-
-        String filePath1 =request.getSession().getServletContext().getRealPath("/articlePictureView")+"/"+newPath;
+        String filePath1 =request.getSession().getServletContext().getRealPath("/articlePictureView");
         //检测文件夹存不存在，不存在就创建
         File file = new File(filePath1);
         file.mkdirs();
+        String filePath2 =filePath1+"/"+newPath;
         // 封装目的地
-        FileOutputStream fos = new FileOutputStream(filePath1);
+        FileOutputStream fos = new FileOutputStream(filePath2);
 
         //复制数据
         int by = 0;
