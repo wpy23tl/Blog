@@ -103,18 +103,7 @@ public class UserController {
 
 	}
 
-	/**
-	 * 跳转到关于我页面
-	 * @param
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("/aboutMe")
-	public String aboutMe( HttpServletRequest request, Model model){
-		User user = userService.getObjectById(1);
-		model.addAttribute("aboutMe",user.getInfo());
-		return "forceGround/aboutMe";
-	}
+
 
 	/**
 	 * 跳转到修改关于我界面

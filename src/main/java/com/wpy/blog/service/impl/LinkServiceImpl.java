@@ -81,6 +81,7 @@ public class LinkServiceImpl implements LinkService {
 		try {
 			PageHelper.startPage(Integer.valueOf(page),Integer.valueOf(pageSize));
 			List<Link> linkList = linkMapper.select(null);
+			response.setData(linkList);
 			response.setSuccess(true);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();

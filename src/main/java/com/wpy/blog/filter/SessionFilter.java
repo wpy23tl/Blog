@@ -27,7 +27,7 @@ public class SessionFilter implements Filter {
         list.add("/blogController/index.do");
         list.add("/blogController/article.do");
         list.add("/userController/login.do");
-        list.add("/userController/aboutMe.do");
+        list.add("/blogController/aboutMe.do");
     }
 
     @Override

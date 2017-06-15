@@ -43,7 +43,8 @@ public class BlogController {
 	private LinkService linkService;
 	@Resource
 	private PictureService pictureService;
-
+	@Resource
+	private UserService userService;
 
 	@ModelAttribute
 	public void init(Model model){
@@ -121,5 +122,18 @@ public class BlogController {
 		model.addAttribute("lastBlog",lastBlog);
 		model.addAttribute("nextBlog",nextBlog);
 		return "portal/article";
+	}
+
+	/**
+	 * 跳转到关于我页面
+	 * @param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/aboutMe")
+	public String aboutMe( HttpServletRequest request, Model model){
+		User user = userService.getObjectById(1);
+		model.addAttribute("aboutMe",user.getInfo());
+		return "forceGround/aboutMe";
 	}
 }
