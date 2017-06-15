@@ -9,8 +9,7 @@ public class User implements Serializable {
 	private Integer id;//����id
 	private String userName;//�û���
 	private String password;//����
-	@Transient
-	private String aboutMe;//关于我
+	private String info;//关于我
 	public Integer getId() {
 		return id;
 	}
@@ -30,11 +29,11 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public String getAboutMe() {
-		return aboutMe;
+	public String getInfo() {
+		return info;
 	}
 
-	public void setAboutMe(String aboutMe) {
-		this.aboutMe = aboutMe;
+	public void setInfo(String info) {
+		this.info = info;
 	}
 }

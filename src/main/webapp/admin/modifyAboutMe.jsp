@@ -36,7 +36,7 @@
 				
 				type:"POST",
 				data:{"aboutMe":content},
-				url:"${pageContext.request.contextPath}/admin/blog/saveAboutMe.do",
+				url:"${pageContext.request.contextPath}/userController/saveAboutMe.do?id=${currentUser.id}",
 				dataType:"JSON",
 				success:function(data){
 					if(data.success){

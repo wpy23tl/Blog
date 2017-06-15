@@ -102,4 +102,43 @@ public class UserController {
 		return "redirect:login.jsp";
 
 	}
+
+	/**
+	 * 跳转到关于我页面
+	 * @param
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/aboutMe")
+	public String aboutMe( HttpServletRequest request, Model model){
+		User user = userService.getObjectById(1);
+		model.addAttribute("aboutMe",user.getInfo());
+		return "forceGround/aboutMe";
+	}
+
+	/**
+	 * 跳转到修改关于我界面
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/modifyAboutMePage")
+	public String modifyAboutMePage(String id,HttpServletRequest request,HttpServletResponse response,Model model){
+		User user = userService.getObjectById(Integer.valueOf(id));
+		model.addAttribute("aboutMe",user.getInfo());
+		return "/admin/modifyAboutMe";
+
+	}
+
+	/**
+	 * 保存关于我
+	 *
+	 * @return
+	 */
+	@RequestMapping("/saveAboutMe")
+	@ResponseBody
+	public Response saveAboutMe(String id,HttpServletRequest request,HttpServletResponse response,String aboutMe) throws Exception {
+
+		return userService.saveAboutMe(id,aboutMe);
+	}
 }

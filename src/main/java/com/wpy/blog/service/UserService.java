@@ -18,6 +18,8 @@ public interface UserService {
 
 	public Response<User> login(String uesrname, String password, String verifCode);
 	public Response updatePassword(String id,String password);
+	public  User getObjectById(Integer id);
+	public Response saveAboutMe(String id,String info);
 
 
 }

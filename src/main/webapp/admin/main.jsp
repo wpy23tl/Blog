@@ -135,7 +135,7 @@
 			<a href="javascript:openTab('评论信息管理','commentManage.jsp','icon-plgl')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-plgl'" style="width: 150px;">评论信息管理</a>
 		</div>
 		<div title="个人信息管理"  data-options="iconCls:'icon-grxx'" style="padding:10px">
-			<a href="javascript:void(0)" onclick="openTab('修改个人信息','/blogAdminController/goModifyAboutMe.do','icon-grxxxg')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-grxxxg'" style="width: 150px;">修改个人信息</a>
+			<a href="javascript:void(0)" onclick="openTab('修改个人信息','/userController/modifyAboutMePage.do?id=${currentUser.id}','icon-grxxxg')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-grxxxg'" style="width: 150px;">修改个人信息</a>
 		</div>
 		<div title="系统管理"  data-options="iconCls:'icon-system'" style="padding:10px">
 		    <a href="javascript:void(0)" onclick="openTab('友情链接管理','/linkAdminController/manager.do','icon-link')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-link'" style="width: 150px">友情链接管理</a>

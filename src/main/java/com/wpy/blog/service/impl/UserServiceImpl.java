@@ -45,4 +45,24 @@ public class UserServiceImpl implements UserService {
 		}
 		return response;
 	}
+
+	@Override
+	public User getObjectById(Integer id) {
+		return userMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public Response saveAboutMe(String id,String info) {
+		Response response = new Response();
+		try {
+			User user = userMapper.selectByPrimaryKey(Integer.valueOf(id));
+			user.setInfo(info);
+			userMapper.updateByPrimaryKey(user);
+			response.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setSuccess(false);
+		}
+		return response;
+	}
 }
