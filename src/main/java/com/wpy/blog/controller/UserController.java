@@ -4,6 +4,7 @@ import com.wpy.blog.entity.*;
 import com.wpy.blog.framework.model.DataGrid;
 import com.wpy.blog.framework.model.Response;
 import com.wpy.blog.service.*;
+import com.wpy.blog.util.MD5keyBean;
 import com.wpy.blog.vo.BlogVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -66,13 +67,16 @@ public class UserController {
  		return "login";
 	}
 
-	if (!password.equals(user.getPassword())){
+		MD5keyBean md5keyBean = new MD5keyBean();
+	if (!md5keyBean.getkeyBeanofStr(password).equals(user.getPassword())){
 		model.addAttribute("errorInfo","密码输入错误！");
 		return "login";
 
 	}
 
+	HttpSession session = request.getSession();
 	request.getSession().setAttribute("currentUser",user);
+	session.setMaxInactiveInterval(30*60);
 
 	return  "admin/main";
 
@@ -89,7 +93,8 @@ public class UserController {
 	@ResponseBody
 	public Response modifyPassword(String id,String newPassword,HttpServletResponse response)throws Exception {
 
-		Response resp = userService.updatePassword(id, newPassword);
+		MD5keyBean md5keyBean = new MD5keyBean();
+		Response resp = userService.updatePassword(id, md5keyBean.getkeyBeanofStr(newPassword));
 		return resp;
 
 	}

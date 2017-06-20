@@ -97,7 +97,17 @@
     function start(){
         $.ajax({
             type:"POST",
-            url:"${pageContext.request.contextPath}/timeTaskController/start.do"
+            url:"https://www.oschina.net/action/openapi/blog_list",
+			data:{
+                "access_token":"abf05bf7-4502-4560-942d-b2a98c837532",
+                "page":1,
+                "pageSize":20,
+                "dataType":"json"
+			},
+			dataType:"JSON",
+			success:function (data) {
+				JSON.stringify(data);
+            }
 		});
     }
 

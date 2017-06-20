@@ -122,6 +122,7 @@
 			<a href="javascript:void(0)" onclick="openTab('博客推荐管理','/bloggerRecommendAdminController/manager.do','icon-bklb')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">博主推荐</a>
 			<a href="javascript:void(0)" onclick="openTab('首页轮播图片设置','/firstPageBannerSettingAdminController/manager.do','icon-bklb')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">首页轮播图片设置</a>
 			<a href="javascript:void(0)" onclick="openTab('文章预览图片设置','/articlePictureViewSettingAdminController/manager.do','icon-bklb')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">文章预览图片设置</a>
+			<a href="javascript:void(0)" onclick="openTab('定时设置','/timeTaskController/manager.do','icon-bklb')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">定时设置</a>
 		</div>
 		<div title="评论管理"  data-options="iconCls:'icon-plgl'" style="padding:10px">
 			<a href="javascript:openTab('评论审核','commentReview.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px">评论审核</a>

@@ -187,7 +187,7 @@ http-equiv="X-UA-Compatible">
             <SPAN class="p_logo"></SPAN><INPUT class="ipt" id="password" name="password" type="password" placeholder="请输入密码" value="">
         </P>
         <P style="position: relative;">
-            <SPAN class="p_logo"></SPAN><INPUT class="ipt" id="verifyCode" name="verifyCode" type="text" placeholder="请输入验证码" style="width: 229px" value="">
+            <SPAN class="p_logo"></SPAN><INPUT class="ipt" id="verifyCode" name="verifyCode" type="text" maxlength="4" placeholder="请输入验证码" style="width: 229px" value="">
             <img onclick="javascript:void(0)" title="换一张试试" name="randImage" id="randImage" src="${pageContext.request.contextPath}/image.jsp" style="width:60;height: 25 "  border="1" align="absmiddle">
         </P>
         <DIV style="height: 50px; line-height: 50px; margin-top: 30px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
